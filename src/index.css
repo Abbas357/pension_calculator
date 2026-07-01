@@ -169,3 +169,20 @@
     left: auto;
   }
 }
+
+/*
+ * Sonner's default close button sits in the top-left corner and only becomes visually
+ * obvious on hover. Move it to the right edge, centered on the toast's vertical midline,
+ * and keep it fully opaque at all times; pad the toast so the message text doesn't run
+ * under it.
+ */
+[data-sonner-toast][data-styled='true'] {
+  padding-right: 2.5rem;
+}
+[data-sonner-toast][data-styled='true'] [data-close-button] {
+  top: 50% !important;
+  left: auto !important;
+  right: 0.625rem !important;
+  transform: translateY(-50%) !important;
+  opacity: 1 !important;
+}

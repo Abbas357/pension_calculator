@@ -26,7 +26,7 @@ export function FormField({ label, htmlFor, children, className, hint }: FormFie
 
 export function FormSectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h3 className="mb-3 mt-6 text-xs font-semibold uppercase tracking-wider text-primary/80 first:mt-0">
+    <h3 className="mb-3 mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground first:mt-0">
       {children}
     </h3>
   )

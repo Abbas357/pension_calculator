@@ -126,7 +126,7 @@ export function AppShell({
           pensionerName={form.name}
           onSaveUser={onSaveUser}
         />
-        <Toaster position="top-center" />
+        <Toaster position="top-center" closeButton />
       </div>
 
       {result && (
