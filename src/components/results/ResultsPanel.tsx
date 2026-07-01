@@ -7,9 +7,10 @@ import type { PensionResult } from '@/lib/pension/types'
 interface Props {
   result: PensionResult | null
   pensionerName?: string
+  onSaveUser?: () => void
 }
 
-export function ResultsPanel({ result, pensionerName }: Props) {
+export function ResultsPanel({ result, pensionerName, onSaveUser }: Props) {
   return (
     <Card className="print:hidden border-white/20 bg-white/40 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
       {result ? (
@@ -17,7 +18,7 @@ export function ResultsPanel({ result, pensionerName }: Props) {
           <ResultsHeader
             result={result}
             pensionerName={pensionerName}
-            actions={<ExportActions result={result} />}
+            actions={<ExportActions result={result} onSave={onSaveUser} />}
           />
           <CardContent className="overflow-x-auto px-0">
             <ResultsTable result={result} />

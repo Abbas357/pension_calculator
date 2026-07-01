@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Download, FileImage, Printer, Loader2 } from 'lucide-react'
+import { Download, FileImage, Printer, Loader2, Save } from 'lucide-react'
 import { exportResultsAsPng } from '@/export/exportImage'
 import { exportResultsAsPdf } from '@/export/exportPdf'
 import { buildExportFilename } from '@/export/exportFilenames'
@@ -8,7 +8,12 @@ import type { PensionResult } from '@/lib/pension/types'
 
 const EXPORT_NODE_ID = 'pension-export-capture'
 
-export function ExportActions({ result }: { result: PensionResult }) {
+interface Props {
+  result: PensionResult
+  onSave?: () => void
+}
+
+export function ExportActions({ result, onSave }: Props) {
   const [busy, setBusy] = useState<'png' | 'pdf' | null>(null)
 
   const getExportNode = () => document.getElementById(EXPORT_NODE_ID)
@@ -37,6 +42,11 @@ export function ExportActions({ result }: { result: PensionResult }) {
 
   return (
     <div className="flex flex-wrap justify-end gap-2">
+      {onSave && (
+        <Button size="sm" variant="outline" onClick={onSave} disabled={busy !== null}>
+          <Save /> Save
+        </Button>
+      )}
       <Button size="sm" variant="outline" onClick={handlePng} disabled={busy !== null}>
         {busy === 'png' ? <Loader2 className="animate-spin" /> : <FileImage />}
         Download PNG

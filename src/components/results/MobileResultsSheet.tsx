@@ -8,9 +8,10 @@ import type { PensionResult } from '@/lib/pension/types'
 interface Props {
   result: PensionResult | null
   pensionerName?: string
+  onSaveUser?: () => void
 }
 
-export function MobileResultsSheet({ result, pensionerName }: Props) {
+export function MobileResultsSheet({ result, pensionerName, onSaveUser }: Props) {
   return (
     <div className="fixed inset-x-4 bottom-4 z-40 lg:hidden print:hidden">
       <Sheet>
@@ -29,7 +30,7 @@ export function MobileResultsSheet({ result, pensionerName }: Props) {
             <SheetTitle>Pension Calculation</SheetTitle>
           </SheetHeader>
           <ScrollArea className="h-full px-4 pb-4">
-            <ResultsPanel result={result} pensionerName={pensionerName} />
+            <ResultsPanel result={result} pensionerName={pensionerName} onSaveUser={onSaveUser} />
           </ScrollArea>
         </SheetContent>
       </Sheet>
