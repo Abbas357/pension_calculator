@@ -1,14 +1,10 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
+import { Combobox } from './Combobox'
 import { FormField, FormSectionTitle } from './FormField'
 import { BPS_OPTIONS } from '@/lib/pension/constants'
 import type { PensionFormInput } from '@/lib/pension/types'
+
+const BPS_COMBOBOX_OPTIONS = BPS_OPTIONS.map((bps) => ({ value: String(bps), label: `BPS-${bps}` }))
 
 interface Props {
   form: PensionFormInput
@@ -39,21 +35,14 @@ export function PaySection({ form, setField, payWarning }: Props) {
       <FormSectionTitle>Pay Details</FormSectionTitle>
       <div className="space-y-3">
         <FormField label="BPS / Grade" htmlFor="bps">
-          <Select
+          <Combobox
+            id="bps"
             value={form.bps ? String(form.bps) : ''}
-            onValueChange={(v) => setField('bps', Number(v))}
-          >
-            <SelectTrigger id="bps" className="w-full">
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              {BPS_OPTIONS.map((bps) => (
-                <SelectItem key={bps} value={String(bps)}>
-                  BPS-{bps}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onChange={(v) => setField('bps', Number(v))}
+            options={BPS_COMBOBOX_OPTIONS}
+            placeholder="Select grade"
+            searchPlaceholder="Search BPS..."
+          />
         </FormField>
         <FormField label="Last Basic Pay" hint={payWarning ?? undefined}>
           {numberField(form, setField, 'basicPay', 'Without allowances')}

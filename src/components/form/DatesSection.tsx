@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input'
+import { DatePicker } from './DatePicker'
 import { FormField, FormSectionTitle } from './FormField'
 import type { PensionFormInput } from '@/lib/pension/types'
 
@@ -25,39 +26,19 @@ export function DatesSection({ form, setField }: Props) {
           />
         </FormField>
         <FormField label="Date of Birth" htmlFor="dob">
-          <Input
-            id="dob"
-            type="date"
-            value={form.dob ?? ''}
-            onChange={(e) => setField('dob', e.target.value || null)}
-          />
+          <DatePicker id="dob" value={form.dob} onChange={(v) => setField('dob', v)} />
         </FormField>
         <FormField label="Date of Appointment" htmlFor="doa">
-          <Input
-            id="doa"
-            type="date"
-            value={form.doa ?? ''}
-            onChange={(e) => setField('doa', e.target.value || null)}
-          />
+          <DatePicker id="doa" value={form.doa} onChange={(v) => setField('doa', v)} />
         </FormField>
         {showDor && (
           <FormField label="Date of Retirement" htmlFor="dor">
-            <Input
-              id="dor"
-              type="date"
-              value={form.dor ?? ''}
-              onChange={(e) => setField('dor', e.target.value || null)}
-            />
+            <DatePicker id="dor" value={form.dor} onChange={(v) => setField('dor', v)} />
           </FormField>
         )}
         {showDod && (
           <FormField label="Date of Death" htmlFor="dod">
-            <Input
-              id="dod"
-              type="date"
-              value={form.dod ?? ''}
-              onChange={(e) => setField('dod', e.target.value || null)}
-            />
+            <DatePicker id="dod" value={form.dod} onChange={(v) => setField('dod', v)} />
           </FormField>
         )}
       </div>

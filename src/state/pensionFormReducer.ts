@@ -1,6 +1,6 @@
 import { defaultRetirementDate } from '@/lib/pension/dateMath'
 import type { PensionFormInput } from '@/lib/pension/types'
-import { initialFormState } from './initialFormState'
+import { initialFormState, type PensionUiState } from './initialFormState'
 
 export type PensionFormAction =
   | {
@@ -8,23 +8,32 @@ export type PensionFormAction =
       field: keyof PensionFormInput
       value: PensionFormInput[keyof PensionFormInput]
     }
+  | { type: 'HYDRATE'; state: PensionUiState }
   | { type: 'RESET' }
 
 export function pensionFormReducer(
-  state: PensionFormInput,
+  state: PensionUiState,
   action: PensionFormAction,
-): PensionFormInput {
+): PensionUiState {
   switch (action.type) {
     case 'SET_FIELD': {
       const next = { ...state, [action.field]: action.value }
 
-      // Default DOR to DOB + 60 years (superannuation age) the first time DOB is filled.
-      if (action.field === 'dob' && typeof action.value === 'string' && action.value && !state.dor) {
+      // Keep DOR synced to DOB + 60 years (superannuation age) until the user edits DOR
+      // themselves. Previously this only ran once (while dor was empty), so a stray
+      // intermediate value while typing DOB — e.g. from a date input firing onChange before
+      // all digits are entered — could "lock in" a wrong DOR that never updated again.
+      if (action.field === 'dob' && typeof action.value === 'string' && action.value && state.dorAutoFilled) {
         next.dor = defaultRetirementDate(action.value)
+      }
+      if (action.field === 'dor') {
+        next.dorAutoFilled = false
       }
 
       return next
     }
+    case 'HYDRATE':
+      return action.state
     case 'RESET':
       return initialFormState
     default:
