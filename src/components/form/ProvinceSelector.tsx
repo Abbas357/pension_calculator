@@ -16,7 +16,7 @@ export function ProvinceSelector({ value, onChange }: Props) {
 
   return (
     <FormField label="Government" htmlFor="govt">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="space-y-1.5">
         <Combobox
           id="govt"
           value={value}
@@ -24,11 +24,10 @@ export function ProvinceSelector({ value, onChange }: Props) {
           options={OPTIONS}
           placeholder="Select government"
           searchPlaceholder="Search province..."
-          className="sm:w-64"
         />
         {selected?.aliasedToKpk && (
           <Badge variant="outline" className="text-amber-600 dark:text-amber-400">
-            Rates pending verification — mirrors KPK
+            Rates pending verification, mirrors KPK
           </Badge>
         )}
       </div>

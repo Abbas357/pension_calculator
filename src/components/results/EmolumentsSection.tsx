@@ -6,19 +6,14 @@ export function EmolumentsSection({ emoluments }: { emoluments: PensionResult['e
   return (
     <>
       <ResultSectionHeader>Emoluments</ResultSectionHeader>
-      <MoneyRow
-        label={
-          <>
-            Basic Pay
-            {emoluments.payWarning && (
-              <span className="ml-2 text-xs font-normal text-destructive">
-                {emoluments.payWarning}
-              </span>
-            )}
-          </>
-        }
-        amount={emoluments.basicPay}
-      />
+      <MoneyRow label="Basic Pay" amount={emoluments.basicPay} />
+      {emoluments.payWarning && (
+        <tr>
+          <td colSpan={3} className="px-3 pb-1.5 text-xs text-amber-600 dark:text-amber-400">
+            ⓘ {emoluments.payWarning}
+          </td>
+        </tr>
+      )}
       {emoluments.retiringYearIncrement !== null && (
         <MoneyRow label="Retiring Year Increment" amount={emoluments.retiringYearIncrement} striped />
       )}

@@ -36,7 +36,7 @@ export function ExportActions({ result }: { result: PensionResult }) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-end gap-2">
       <Button size="sm" variant="outline" onClick={handlePng} disabled={busy !== null}>
         {busy === 'png' ? <Loader2 className="animate-spin" /> : <FileImage />}
         Download PNG

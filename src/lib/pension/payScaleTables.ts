@@ -121,7 +121,11 @@ export function checkPay(pay: number, bps: number, dor: string): string | null {
       const [minPay, increment] = scale.pay[bps - 1]
       const diff = pay - minPay
       const misaligned = diff !== 0 && diff % increment !== 0
-      return misaligned ? 'Basic Pay is not correct' : null
+      if (!misaligned) return null
+      // Reference tables only go up to 2022-07-01, so any later retirement date reuses that
+      // same scale — a perfectly valid modern basic pay may not land on one of its steps.
+      // This is informational only and never blocks the calculation.
+      return `Doesn't match a BPS-${bps} increment step on the ${scale.wef} pay scale (the latest on file). Calculation still uses the entered value.`
     }
   }
   return null

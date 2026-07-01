@@ -4,18 +4,24 @@ import { ResultsTable } from './ResultsTable'
 import { ExportActions } from './ExportActions'
 import type { PensionResult } from '@/lib/pension/types'
 
-export function ResultsPanel({ result }: { result: PensionResult | null }) {
+interface Props {
+  result: PensionResult | null
+  pensionerName?: string
+}
+
+export function ResultsPanel({ result, pensionerName }: Props) {
   return (
     <Card className="print:hidden border-white/20 bg-white/40 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
       {result ? (
         <>
-          <ResultsHeader result={result} />
+          <ResultsHeader
+            result={result}
+            pensionerName={pensionerName}
+            actions={<ExportActions result={result} />}
+          />
           <CardContent className="overflow-x-auto px-0">
             <ResultsTable result={result} />
           </CardContent>
-          <div className="px-4 pb-4">
-            <ExportActions result={result} />
-          </div>
         </>
       ) : (
         <CardContent className="flex min-h-[16rem] flex-col items-center justify-center gap-2 text-center text-muted-foreground">

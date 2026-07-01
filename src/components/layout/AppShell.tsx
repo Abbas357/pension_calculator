@@ -34,12 +34,12 @@ export function AppShell({ form, dispatch, result }: Props) {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <PensionForm form={form} dispatch={dispatch} payWarning={result?.emoluments.payWarning} />
             <div className="hidden lg:block">
-              <ResultsPanel result={result} />
+              <ResultsPanel result={result} pensionerName={form.name} />
             </div>
           </div>
         </main>
 
-        <MobileResultsSheet result={result} />
+        <MobileResultsSheet result={result} pensionerName={form.name} />
       </div>
 
       {result && (
