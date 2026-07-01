@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { Button } from '@/components/ui/button'
 import { Users, ClipboardList } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
+import { Footer } from './Footer'
 import { cn } from '@/lib/utils'
 import { useSwipeGesture } from '@/hooks/useSwipeGesture'
 import type { PensionFormAction } from '@/state/pensionFormReducer'
@@ -110,6 +111,8 @@ export function AppShell({
             </div>
           </div>
         </main>
+
+        <Footer />
 
         <MobileUsersSheet
           open={usersSheetOpen}

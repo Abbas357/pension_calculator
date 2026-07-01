@@ -18,7 +18,7 @@ export function MobileResultsSheet({ open, onOpenChange, result, pensionerName, 
         <SheetHeader>
           <SheetTitle>Pension Calculation</SheetTitle>
         </SheetHeader>
-        <ScrollArea className="h-full px-4 pb-4">
+        <ScrollArea className="min-h-0 flex-1 px-4 pb-4">
           <ResultsPanel result={result} pensionerName={pensionerName} onSaveUser={onSaveUser} />
         </ScrollArea>
       </SheetContent>

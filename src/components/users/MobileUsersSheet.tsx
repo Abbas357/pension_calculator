@@ -19,7 +19,7 @@ export function MobileUsersSheet({ open, onOpenChange, savedUsers, onSelect, onC
         <SheetHeader>
           <SheetTitle>Saved Users</SheetTitle>
         </SheetHeader>
-        <ScrollArea className="h-full px-4 pb-4">
+        <ScrollArea className="min-h-0 flex-1 px-4 pb-4">
           <SavedUsersPanel
             savedUsers={savedUsers}
             onSelect={(user) => {
