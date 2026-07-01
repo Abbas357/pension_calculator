@@ -1,0 +1,25 @@
+import type { PensionFormInput } from '@/lib/pension/types'
+
+export const initialFormState: PensionFormInput = {
+  ptype: 'superannuation',
+  govt: 'kpk',
+  name: '',
+  dob: null,
+  doa: null,
+  dor: null,
+  dod: null,
+  eolEnabled: false,
+  eolYears: 0,
+  eolMonths: 0,
+  eolDays: 0,
+  bps: 0,
+  basicPay: 0,
+  specialPay: 0,
+  personalPay: 0,
+  qualificationPay: 0,
+  overseasPay: 0,
+  spa: 0,
+  orderlyAllowance: 0,
+  otherPensionablePay: 0,
+  commutePct: 35,
+}
