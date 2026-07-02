@@ -13,7 +13,7 @@ export function CommutationSlider({ form, setField }: Props) {
   return (
     <>
       <FormSectionTitle>Commutation</FormSectionTitle>
-      <FormField label="Commutation %">
+      <FormField label="Commutation %" plain>
         <div className="flex items-center gap-3">
           <Slider
             min={0}

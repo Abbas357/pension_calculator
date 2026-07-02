@@ -18,7 +18,6 @@ export function PensionTypeSelector({ value, onChange }: Props) {
         value={value}
         onChange={(v) => onChange(v as PensionType)}
         options={OPTIONS}
-        placeholder="Select pension type"
         searchPlaceholder="Search pension type..."
       />
     </FormField>

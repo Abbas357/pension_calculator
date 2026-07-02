@@ -19,7 +19,7 @@ export function DeveloperInfoDialog({ open, onOpenChange }: Props) {
         <DialogHeader>
           <div className="flex items-center gap-3">
             <img
-              src="/dp.jpg"
+              src={`${import.meta.env.BASE_URL}dp.jpg`}
               alt="Abbas Khan"
               className="size-14 shrink-0 rounded-full object-cover ring-1 ring-foreground/10"
             />
@@ -31,7 +31,7 @@ export function DeveloperInfoDialog({ open, onOpenChange }: Props) {
         </DialogHeader>
 
         <p className="text-sm text-muted-foreground">
-          I am a web developer and programmer, currently working as Assistant Director IT in the
+          Web developer and programmer, currently working as Assistant Director IT in the
           Human Resource Management and Administration Department, Government of Khyber
           Pakhtunkhwa.
         </p>

@@ -40,7 +40,6 @@ export function PaySection({ form, setField, payWarning }: Props) {
             value={form.bps ? String(form.bps) : ''}
             onChange={(v) => setField('bps', Number(v))}
             options={BPS_COMBOBOX_OPTIONS}
-            placeholder="Select grade"
             searchPlaceholder="Search BPS..."
           />
         </FormField>

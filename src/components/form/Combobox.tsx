@@ -22,7 +22,6 @@ interface ComboboxProps {
   value: string
   onChange: (value: string) => void
   options: ComboboxOption[]
-  placeholder?: string
   searchPlaceholder?: string
   className?: string
 }
@@ -32,7 +31,6 @@ export function Combobox({
   value,
   onChange,
   options,
-  placeholder = 'Select...',
   searchPlaceholder = 'Search...',
   className,
 }: ComboboxProps) {
@@ -48,10 +46,14 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn('w-full justify-between font-normal', !selected && 'text-muted-foreground', className)}
+          data-filled={selected ? '' : undefined}
+          className={cn(
+            'relative h-11 w-full justify-start bg-transparent pl-2.5 pr-9 pt-3.5 pb-1 font-normal dark:bg-input/30',
+            className,
+          )}
         >
-          <span className="truncate">{selected?.label ?? placeholder}</span>
-          <ChevronsUpDown className="ml-1 size-4 shrink-0 opacity-50" />
+          <span className="truncate">{selected?.label}</span>
+          <ChevronsUpDown className="absolute top-1/2 right-2.5 size-4 -translate-y-1/2 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-(--radix-popover-trigger-width) p-0">

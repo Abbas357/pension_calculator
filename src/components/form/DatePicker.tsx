@@ -4,19 +4,17 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { CalendarIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 interface DatePickerProps {
   id?: string
   value: string | null // YYYY-MM-DD
   onChange: (value: string | null) => void
-  placeholder?: string
 }
 
 const MIN_YEAR = 1930
 const MAX_YEAR_OFFSET = 40
 
-export function DatePicker({ id, value, onChange, placeholder = 'Pick a date' }: DatePickerProps) {
+export function DatePicker({ id, value, onChange }: DatePickerProps) {
   const [open, setOpen] = useState(false)
   const selected = value ? parseISO(value) : undefined
   const displayValue = selected && isValid(selected) ? format(selected, 'dd MMM yyyy') : null
@@ -28,13 +26,11 @@ export function DatePicker({ id, value, onChange, placeholder = 'Pick a date' }:
           id={id}
           type="button"
           variant="outline"
-          className={cn(
-            'w-full justify-start font-normal',
-            !displayValue && 'text-muted-foreground',
-          )}
+          data-filled={displayValue ? '' : undefined}
+          className="relative h-11 w-full justify-start bg-transparent pl-2.5 pr-9 pt-3.5 pb-1 font-normal dark:bg-input/30"
         >
-          <CalendarIcon className="mr-1 size-4" />
-          {displayValue ?? placeholder}
+          <span className="truncate">{displayValue}</span>
+          <CalendarIcon className="absolute top-1/2 right-2.5 size-4 -translate-y-1/2 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
