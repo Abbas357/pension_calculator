@@ -38,7 +38,7 @@ export function calculatePension(form: PensionFormInput): PensionResult | null {
   const isFederal = form.govt === 'federal'
 
   // ── Service details ──────────────────────────────────────────────
-  const ageAtEvent = age(dob, eventDate)
+  const ageAtRetirement = age(dob, eventDate)
   const lengthOfServiceValue = lengthOfService(doa, eventDate)
 
   const hasEol = form.eolEnabled && form.eolYears + form.eolMonths + form.eolDays > 0
@@ -57,7 +57,7 @@ export function calculatePension(form: PensionFormInput): PensionResult | null {
     dorOrDodLabel: isDdService ? 'Date of Death' : 'Date of Retirement',
     dorOrDod: eventDate,
     dob,
-    ageAtEvent,
+    ageAtRetirement,
     doa,
     lengthOfService: lengthOfServiceValue,
     eolDeducted: hasEol
@@ -112,7 +112,7 @@ export function calculatePension(form: PensionFormInput): PensionResult | null {
   if (shouldCommute) {
     const commutePct = isDdService ? DDSERVICE_COMMUTE_PCT : form.commutePct
     const commutedPortion = trimNum((grossPension * commutePct) / 100, 2)
-    const commuttRate = commutationRate(ageAtEvent.years)
+    const commuttRate = commutationRate(ageAtRetirement.years)
     netPension = trimNum(grossPension - commutedPortion, 2)
 
     let dateOfRestoration: string | null = null

@@ -47,7 +47,7 @@ export interface ServiceDetails {
   dorOrDodLabel: string
   dorOrDod: string
   dob: string
-  ageAtEvent: DurationYMD
+  ageAtRetirement: DurationYMD
   doa: string
   lengthOfService: DurationYMD
   eolDeducted: DurationYMD | null

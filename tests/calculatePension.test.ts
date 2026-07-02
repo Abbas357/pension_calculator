@@ -54,7 +54,7 @@ describe('calculatePension', () => {
 
     // Service details
     expect(r.service.dorOrDodLabel).toBe('Date of Retirement')
-    expect(r.service.ageAtEvent).toEqual({ years: 59, months: 7, days: 0 })
+    expect(r.service.ageAtRetirement).toEqual({ years: 59, months: 7, days: 0 })
     expect(r.service.lengthOfService).toEqual({ years: 37, months: 6, days: 5 })
     expect(r.service.eolDeducted).toEqual({ years: 1, months: 0, days: 0 })
     expect(r.service.qualifyingServiceRaw).toBe(37)
@@ -113,7 +113,7 @@ describe('calculatePension', () => {
 
     expect(r.service.dorOrDodLabel).toBe('Date of Death')
     expect(r.service.dorOrDod).toBe('2021-09-20')
-    expect(r.service.ageAtEvent).toEqual({ years: 51, months: 6, days: 15 })
+    expect(r.service.ageAtRetirement).toEqual({ years: 51, months: 6, days: 15 })
     expect(r.service.lengthOfService).toEqual({ years: 26, months: 1, days: 19 })
     expect(r.service.qualifyingServiceYears).toBe(26)
     expect(r.service.qualifyingServiceCapped).toBe(false)
@@ -159,7 +159,7 @@ describe('calculatePension', () => {
 
     expect(r.service.dorOrDodLabel).toBe('Date of Retirement')
     expect(r.service.dorOrDod).toBe('2015-06-01')
-    expect(r.service.ageAtEvent).toEqual({ years: 55, months: 0, days: 0 }) // age at DOR, not DOD
+    expect(r.service.ageAtRetirement).toEqual({ years: 55, months: 0, days: 0 }) // age at DOR, not DOD
     expect(r.service.qualifyingServiceYears).toBe(30)
 
     expect(r.pensionCalc.grossPension).toBeCloseTo(13720.0, 2)

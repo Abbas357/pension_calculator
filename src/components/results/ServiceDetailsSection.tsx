@@ -10,7 +10,7 @@ export function ServiceDetailsSection({ service }: { service: PensionResult['ser
       </ResultSectionHeader>
       <ResultRow label={service.dorOrDodLabel} value={formatDateSpaced(service.dorOrDod)} />
       <ResultRow label="Date of Birth" value={formatDateSpaced(service.dob)} striped />
-      <ResultRow label="Age at Event" value={formatDurationYMD(service.ageAtEvent)} />
+      <ResultRow label="Age at Retirement" value={formatDurationYMD(service.ageAtRetirement)} />
       <ResultRow label="Date of Appointment" value={formatDateSpaced(service.doa)} striped />
       <ResultRow
         label="Length of Service"
