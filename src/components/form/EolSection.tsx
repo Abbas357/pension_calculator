@@ -1,7 +1,7 @@
 import { Switch } from '@/components/ui/switch'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { FormField, FormSectionTitle } from './FormField'
+import { FormField, FormSection } from './FormField'
 import type { PensionFormInput } from '@/lib/pension/types'
 
 interface Props {
@@ -11,8 +11,7 @@ interface Props {
 
 export function EolSection({ form, setField }: Props) {
   return (
-    <>
-      <FormSectionTitle>Service Adjustment</FormSectionTitle>
+    <FormSection title="Service Adjustment">
       <div className="space-y-3">
         <FormField label="Extraordinary Leave (EOL)" plain>
           <div className="flex items-center gap-2">
@@ -71,6 +70,6 @@ export function EolSection({ form, setField }: Props) {
           </>
         )}
       </div>
-    </>
+    </FormSection>
   )
 }

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, FileImage, Printer, Loader2, Save } from "lucide-react";
+import { FileText, FileImage, Printer, Loader2, Save, RotateCcw } from "lucide-react";
 import { exportResultsAsPng } from "@/export/exportImage";
 import { exportResultsAsPdf } from "@/export/exportPdf";
 import { buildExportFilename } from "@/export/exportFilenames";
+import { cn } from "@/lib/utils";
 import type { PensionResult } from "@/lib/pension/types";
 
 const EXPORT_NODE_ID = "pension-export-capture";
@@ -11,9 +12,10 @@ const EXPORT_NODE_ID = "pension-export-capture";
 interface Props {
 	result: PensionResult;
 	onSave?: () => void;
+	onReset?: () => void;
 }
 
-export function ExportActions({ result, onSave }: Props) {
+export function ExportActions({ result, onSave, onReset }: Props) {
 	const [busy, setBusy] = useState<"png" | "pdf" | null>(null);
 
 	const getExportNode = () => document.getElementById(EXPORT_NODE_ID);
@@ -46,16 +48,32 @@ export function ExportActions({ result, onSave }: Props) {
 		}
 	};
 
+	const buttonClass =
+		"shrink-0 rounded-sm px-1.5 gap-1 text-[11px] leading-none whitespace-nowrap @sm:px-2.5 @sm:gap-1.5 @sm:text-sm text-white";
+	const iconClass = "size-3.5 @sm:size-4";
+
 	return (
-		<div className="flex flex-wrap justify-end gap-2">
+		<div className="@container flex flex-nowrap items-center justify-center gap-1 overflow-x-auto @sm:gap-2">
+			{onReset && (
+				<Button
+					size="lg"
+					onClick={onReset}
+					disabled={busy !== null}
+					className={cn(buttonClass, "bg-amber-500 hover:bg-amber-600")}
+				>
+					<RotateCcw className={iconClass} />
+					Reset
+				</Button>
+			)}
+
 			{onSave && (
 				<Button
 					size="lg"
 					onClick={onSave}
 					disabled={busy !== null}
-					className="rounded-sm bg-emerald-600 hover:bg-emerald-700 text-white"
+					className={cn(buttonClass, "bg-emerald-600 hover:bg-emerald-700")}
 				>
-					<Save />
+					<Save className={iconClass} />
 					Save
 				</Button>
 			)}
@@ -64,9 +82,9 @@ export function ExportActions({ result, onSave }: Props) {
 				size="lg"
 				onClick={handlePng}
 				disabled={busy !== null}
-				className="rounded-sm bg-blue-600 hover:bg-blue-700 text-white"
+				className={cn(buttonClass, "bg-blue-600 hover:bg-blue-700")}
 			>
-				{busy === "png" ? <Loader2 className="animate-spin" /> : <FileImage />}
+				{busy === "png" ? <Loader2 className={cn(iconClass, "animate-spin")} /> : <FileImage className={iconClass} />}
 				Image
 			</Button>
 
@@ -74,9 +92,9 @@ export function ExportActions({ result, onSave }: Props) {
 				size="lg"
 				onClick={handlePdf}
 				disabled={busy !== null}
-				className="rounded-sm bg-red-600 hover:bg-red-700 text-white"
+				className={cn(buttonClass, "bg-red-600 hover:bg-red-700")}
 			>
-				{busy === "pdf" ? <Loader2 className="animate-spin" /> : <Download />}
+				{busy === "pdf" ? <Loader2 className={cn(iconClass, "animate-spin")} /> : <FileText className={iconClass} />}
 				PDF
 			</Button>
 
@@ -84,9 +102,9 @@ export function ExportActions({ result, onSave }: Props) {
 				size="lg"
 				onClick={() => window.print()}
 				disabled={busy !== null}
-				className="rounded-sm bg-slate-700 hover:bg-slate-800 text-white"
+				className={cn(buttonClass, "bg-slate-700 hover:bg-slate-800")}
 			>
-				<Printer />
+				<Printer className={iconClass} />
 				Print
 			</Button>
 		</div>

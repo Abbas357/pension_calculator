@@ -36,7 +36,7 @@ export function SavedUsersPanel({ savedUsers, onSelect, onClear, onDelete }: Pro
   if (savedUsers.length === 0) return null
 
   return (
-    <Card className="border-white/20 bg-white/40 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+    <Card className="border-white/20 bg-white/40 shadow-lg shadow-black/5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:shadow-black/30">
       <CardHeader>
         <CardTitle className="flex items-center gap-1.5 text-sm">
           <Users className="size-4" /> Saved Users

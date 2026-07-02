@@ -1,6 +1,5 @@
-import { Input } from '@/components/ui/input'
 import { DatePicker } from './DatePicker'
-import { FormField, FormSectionTitle } from './FormField'
+import { FormField, FormSection } from './FormField'
 import type { PensionFormInput } from '@/lib/pension/types'
 
 interface Props {
@@ -13,18 +12,8 @@ export function DatesSection({ form, setField }: Props) {
   const showDod = form.ptype === 'ddservice' || form.ptype === 'daretirement'
 
   return (
-    <>
-      <FormSectionTitle>Dates</FormSectionTitle>
+    <FormSection title="Dates">
       <div className="space-y-3">
-        <FormField label="Name of Pensioner" htmlFor="pname">
-          <Input
-            id="pname"
-            maxLength={100}
-            value={form.name}
-            onChange={(e) => setField('name', e.target.value)}
-            placeholder="Optional"
-          />
-        </FormField>
         <FormField label="Date of Birth" htmlFor="dob">
           <DatePicker id="dob" value={form.dob} onChange={(v) => setField('dob', v)} />
         </FormField>
@@ -42,6 +31,6 @@ export function DatesSection({ form, setField }: Props) {
           </FormField>
         )}
       </div>
-    </>
+    </FormSection>
   )
 }

@@ -68,10 +68,13 @@ export function FormField({ label, htmlFor, children, className, hint, plain }: 
   )
 }
 
-export function FormSectionTitle({ children }: { children: ReactNode }) {
+export function FormSection({ title, children }: { title: ReactNode; children: ReactNode }) {
   return (
-    <h3 className="mb-3 mt-6 bg-foreground/5 px-3 py-2 text-ls font-semibold uppercase tracking-wider text-muted-foreground first:mt-0">
-      {children}
-    </h3>
+    <div className="overflow-hidden rounded-lg border border-foreground/10 shadow-sm shadow-black/5 dark:border-white/10 dark:shadow-black/20">
+      <h3 className="bg-foreground/[0.04] px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground dark:bg-white/[0.04]">
+        {title}
+      </h3>
+      <div className="p-3">{children}</div>
+    </div>
   )
 }

@@ -130,6 +130,25 @@
 }
 
 /*
+ * On mobile, our own horizontal drag drives the saved-users/results drawers (see
+ * useSwipeDrawers). Without this, the same horizontal touch gesture is also picked up by
+ * some mobile browsers as an edge-swipe back/forward navigation, fighting our drawers.
+ * touch-action: pan-y leaves vertical scrolling untouched but tells the browser horizontal
+ * panning is handled by the page's own JS, not browser navigation.
+ */
+@media (max-width: 1023px) {
+  body {
+    touch-action: pan-y;
+    overscroll-behavior-x: contain;
+  }
+  /* The results table scrolls horizontally on its own and is excluded from drawer-drag
+     detection (see isBlockedTarget in useSwipeDrawers) — restore normal touch scrolling. */
+  [data-horizontal-scroll] {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/*
  * Print/export reports are always rendered light-on-white regardless of the app's active
  * theme, since the shared ResultsTable row components reference theme CSS variables
  * (--foreground, --primary, etc.) that would otherwise resolve to dark-mode light colors
@@ -185,4 +204,17 @@
   right: 0.625rem !important;
   transform: translateY(-50%) !important;
   opacity: 1 !important;
+}
+
+/* Subtle nudge on the results panel whenever the calculation changes, so an edit on the
+   form side reads as "this updated" even when the new numbers look similar at a glance. */
+@keyframes wobble {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-3px) rotate(-0.6deg); }
+  40% { transform: translateX(3px) rotate(0.6deg); }
+  60% { transform: translateX(-2px) rotate(-0.3deg); }
+  80% { transform: translateX(1px) rotate(0.2deg); }
+}
+.animate-wobble {
+  animation: wobble 0.35s ease-in-out;
 }

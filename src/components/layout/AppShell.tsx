@@ -1,4 +1,4 @@
-import { useState, type Dispatch } from 'react'
+import { useEffect, useRef, useState, type Dispatch } from 'react'
 import { PensionForm } from '@/components/form/PensionForm'
 import { ResultsPanel } from '@/components/results/ResultsPanel'
 import { MobileResultsSheet } from '@/components/results/MobileResultsSheet'
@@ -12,7 +12,7 @@ import { Users, ClipboardList } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { Footer } from './Footer'
 import { cn } from '@/lib/utils'
-import { useSwipeGesture } from '@/hooks/useSwipeGesture'
+import { useSwipeDrawers } from '@/hooks/useSwipeDrawers'
 import type { PensionFormAction } from '@/state/pensionFormReducer'
 import type { PensionFormInput, PensionResult } from '@/lib/pension/types'
 import type { SavedUser } from '@/lib/storage'
@@ -42,11 +42,42 @@ export function AppShell({
   const [usersSheetOpen, setUsersSheetOpen] = useState(false)
   const [resultsSheetOpen, setResultsSheetOpen] = useState(false)
 
-  useSwipeGesture({
-    onSwipeRight: () => {
-      if (hasSavedUsers) setUsersSheetOpen(true)
-    },
-    onSwipeLeft: () => setResultsSheetOpen(true),
+  const resultsRef = useRef<HTMLDivElement>(null)
+  const isFirstResult = useRef(true)
+  useEffect(() => {
+    if (isFirstResult.current) {
+      isFirstResult.current = false
+      return
+    }
+    const el = resultsRef.current
+    if (!el) return
+    el.classList.remove('animate-wobble')
+    void el.offsetWidth
+    el.classList.add('animate-wobble')
+  }, [result, form.name])
+
+  // Only one mobile drawer is ever open at a time — opening one closes the other.
+  const openUsersSheet = (open: boolean) => {
+    setUsersSheetOpen(open)
+    if (open) setResultsSheetOpen(false)
+  }
+  const openResultsSheet = (open: boolean) => {
+    setResultsSheetOpen(open)
+    if (open) setUsersSheetOpen(false)
+  }
+
+  const {
+    leftRef: usersSheetRef,
+    rightRef: resultsSheetRef,
+    leftProgress: usersSheetProgress,
+    rightProgress: resultsSheetProgress,
+  } = useSwipeDrawers({
+    leftEnabled: hasSavedUsers,
+    rightEnabled: true,
+    leftOpen: usersSheetOpen,
+    rightOpen: resultsSheetOpen,
+    onLeftOpenChange: openUsersSheet,
+    onRightOpenChange: openResultsSheet,
   })
 
   return (
@@ -57,11 +88,11 @@ export function AppShell({
             <div className="flex items-center gap-1">
               {hasSavedUsers && (
                 <Button
-                  variant="ghost"
-                  size="icon"
+                  variant="outline"
+                  size="icon-lg"
                   className="lg:hidden"
                   aria-label="Open saved users"
-                  onClick={() => setUsersSheetOpen(true)}
+                  onClick={() => openUsersSheet(true)}
                 >
                   <Users />
                 </Button>
@@ -76,11 +107,11 @@ export function AppShell({
             <div className="flex items-center gap-1">
               <ThemeToggle />
               <Button
-                variant="ghost"
-                size="icon"
+                variant="outline"
+                size="icon-lg"
                 className="lg:hidden"
                 aria-label="Open results"
-                onClick={() => setResultsSheetOpen(true)}
+                onClick={() => openResultsSheet(true)}
               >
                 <ClipboardList />
               </Button>
@@ -106,8 +137,13 @@ export function AppShell({
               </div>
             )}
             <PensionForm form={form} dispatch={dispatch} payWarning={result?.emoluments.payWarning} />
-            <div className="hidden lg:block">
-              <ResultsPanel result={result} pensionerName={form.name} onSaveUser={onSaveUser} />
+            <div ref={resultsRef} className="hidden lg:block">
+              <ResultsPanel
+                result={result}
+                pensionerName={form.name}
+                onSaveUser={onSaveUser}
+                onReset={() => dispatch({ type: 'RESET' })}
+              />
             </div>
           </div>
         </main>
@@ -115,19 +151,24 @@ export function AppShell({
         <Footer />
 
         <MobileUsersSheet
+          ref={usersSheetRef}
           open={usersSheetOpen}
-          onOpenChange={setUsersSheetOpen}
+          onOpenChange={openUsersSheet}
+          progress={usersSheetProgress}
           savedUsers={savedUsers}
           onSelect={onLoadUser}
           onClear={onClearUsers}
           onDelete={onDeleteUser}
         />
         <MobileResultsSheet
+          ref={resultsSheetRef}
           open={resultsSheetOpen}
-          onOpenChange={setResultsSheetOpen}
+          onOpenChange={openResultsSheet}
+          progress={resultsSheetProgress}
           result={result}
           pensionerName={form.name}
           onSaveUser={onSaveUser}
+          onReset={() => dispatch({ type: 'RESET' })}
         />
         <Toaster position="top-center" closeButton />
       </div>

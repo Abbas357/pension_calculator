@@ -1,5 +1,5 @@
 import { Slider } from '@/components/ui/slider'
-import { FormField, FormSectionTitle } from './FormField'
+import { FormField, FormSection } from './FormField'
 import type { PensionFormInput } from '@/lib/pension/types'
 
 interface Props {
@@ -11,8 +11,7 @@ export function CommutationSlider({ form, setField }: Props) {
   if (form.ptype === 'ddservice') return null
 
   return (
-    <>
-      <FormSectionTitle>Commutation</FormSectionTitle>
+    <FormSection title="Commutation">
       <FormField label="Commutation %" plain>
         <div className="flex items-center gap-3">
           <Slider
@@ -26,6 +25,6 @@ export function CommutationSlider({ form, setField }: Props) {
           <span className="w-12 shrink-0 text-right font-semibold">{form.commutePct}%</span>
         </div>
       </FormField>
-    </>
+    </FormSection>
   )
 }
